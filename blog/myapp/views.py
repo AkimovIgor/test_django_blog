@@ -6,4 +6,4 @@ class MainView(View):
 
     @staticmethod
     def get(request, *args, **kwargs):
-        return render(request, 'myapp/index.html')
+        return render(request, 'myapp/pages/home.html')
