@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
 
     <title>{% block title %}{% endblock %}</title>
 </head>
@@ -48,7 +49,7 @@
 
 <!-- Custom scripts -->
 
-<script src="js/script.js"></script>
+<script src="{% static 'myapp/js/script.js' %}"></script>
 
 </body>
 </html>
