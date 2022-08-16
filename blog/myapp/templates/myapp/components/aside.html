@@ -1,0 +1,47 @@
+<div class="col-md-4">
+    <div class="card my-4">
+        <h5 class="card-header">Теги</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        {% for tag in tags|slice:':3' %}
+                            <li>
+                                <a href="#">{{ tag }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if tags_count > 3 %}
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                            {% for tag in tags|slice:'3:' %}
+                                <li>
+                                    <a href="#">{{ tag }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-4">
+        <h5 class="card-header">Последние статьи</h5>
+        {% for last_post in last_posts %}
+        <div class="card-body">
+            <h5 class="card-title">{{ last_post.title|truncatechars:18 }}</h5>
+            <p class="card-text">{{ last_post.description|truncatechars:80|safe }}</p>
+            <a href="{{ last_post.url }}" class="card-link">Ссылка на статью</a>
+        </div>
+
+            {% if forloop.counter != last_posts.count %}
+                <hr>
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+</div>
