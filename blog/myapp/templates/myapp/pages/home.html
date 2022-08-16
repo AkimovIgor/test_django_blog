@@ -21,7 +21,7 @@
                     <p class="card-text">{{ post.description|truncatechars:100|safe }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ '/blog/'|add:post.url }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                            <a href="{% url 'post_detail' slug=post.url %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                         </div>
                         <small class="text-muted">{{ post.created_at|date:'d.m.Y' }}</small>
                     </div>

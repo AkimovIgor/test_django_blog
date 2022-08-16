@@ -34,7 +34,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ last_post.title|truncatechars:18 }}</h5>
             <p class="card-text">{{ last_post.description|truncatechars:80|safe }}</p>
-            <a href="{{ last_post.url }}" class="card-link">Ссылка на статью</a>
+            <a href="{% url 'post_detail' slug=last_post.url %}" class="card-link">Ссылка на статью</a>
         </div>
 
             {% if forloop.counter != last_posts.count %}
