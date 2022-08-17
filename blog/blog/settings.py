@@ -10,12 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import environ
 import os
 from pathlib import Path
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    # CKEDITOR_CONFIGS=(dict, {}),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -24,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n#m4ejeows^sv5-kzj2e=v4g9#=#4oup0qg@6l)-yuv5#*ge(^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -142,71 +150,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Ckeditor configuration
 # https://github.com/django-ckeditor/django-ckeditor#readme
 
-CKEDITOR_JQUERY_URL = 'https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js'
+CKEDITOR_JQUERY_URL = env('CKEDITOR_JQUERY_URL')
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = env('CKEDITOR_UPLOAD_PATH')
 
-CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_IMAGE_BACKEND = env('CKEDITOR_IMAGE_BACKEND')
 
-CKEDITOR_CONFIGS = {
-    "default": {
-        "removePlugins": "stylesheetparser",
-        'allowedContent': True,
-        'toolbar_Full': [
-            [
-                'Styles',
-                'Format',
-                'Bold',
-                'Italic',
-                'Underline',
-                'Strike',
-                'Subscript',
-                'Superscript',
-                '-',
-                'RemoveFormat'
-            ],
-            ['Image', 'Flash', 'Table', 'HorizontalRule'],
-            ['TextColor', 'BGColor'],
-            ['Smiley','sourcearea', 'SpecialChar'],
-            ['Link', 'Unlink', 'Anchor'],
-            [
-                'NumberedList',
-                'BulletedList',
-                '-',
-                'Outdent',
-                'Indent',
-                '-',
-                'Blockquote',
-                'CreateDiv',
-                '-',
-                'JustifyLeft',
-                'JustifyCenter',
-                'JustifyRight',
-                'JustifyBlock',
-                '-',
-                'BidiLtr',
-                'BidiRtl',
-                'Language'
-            ],
-            ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates'],
-            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
-            ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'],
-            ['Maximize', 'ShowBlocks']
-        ],
-    }
-}
+CKEDITOR_CONFIGS = env.json('CKEDITOR_CONFIGS')
 
 # Mail config
 # https://docs.djangoproject.com/en/4.1/ref/settings/#email-backend
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = env('EMAIL_HOST')
 
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
-EMAIL_PORT = 587
+EMAIL_PORT = env('EMAIL_PORT', default=587)
 
-EMAIL_HOST_USER = ''
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
