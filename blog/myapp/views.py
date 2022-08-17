@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.core.paginator import Paginator
 from .models import Post
-from .forms import SignUpForm
-from django.contrib.auth import login
+from .forms import SignUpForm, SignInForm
+from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 
 
@@ -53,5 +53,29 @@ class SignUpView(View):
                 login(request, user)
                 return HttpResponseRedirect('/')
         return render(request, 'myapp/pages/signup.html', context={
+            'form': form
+        })
+
+
+class SignInView(View):
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+        form = SignInForm()
+        return render(request, 'myapp/pages/signin.html', context={
+            'form': form
+        })
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, **form.cleaned_data)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                form.add_error('password', Exception('Неверный логин/пароль'))
+        return render(request, 'myapp/pages/signin.html', context={
             'form': form
         })
