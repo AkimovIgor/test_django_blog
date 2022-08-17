@@ -2,17 +2,17 @@
     <ul class="pagination justify-content-center">
 
         <li class="page-item {% if not posts.has_previous %}disabled{% endif %}">
-            <a class="page-link" href="?page={{ posts.number|add:-1 }}">Предыдущая</a>
+            <a class="page-link" href="?page={{ posts.number|add:-1 }}{{ add_params }}">Предыдущая</a>
         </li>
 
 
         {% for page in posts.paginator.page_range %}
-            <li class="page-item {% if posts.number == page %}active{% endif %}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+            <li class="page-item {% if posts.number == page %}active{% endif %}"><a class="page-link" href="?page={{ page }}{{ add_params }}">{{ page }}</a></li>
         {% endfor %}
 
 
         <li class="page-item {% if not posts.has_next %}disabled{% endif %}">
-            <a class="page-link" href="?page={{ posts.number|add:1 }}">Следующая</a>
+            <a class="page-link" href="?page={{ posts.number|add:1 }}{{ add_params }}">Следующая</a>
         </li>
 
     </ul>

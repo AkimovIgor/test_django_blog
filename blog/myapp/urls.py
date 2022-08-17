@@ -14,4 +14,5 @@ urlpatterns = [
     }, name='logout'),
     path('contacts', FeedBackView.as_view(), name='contacts'),
     path('contacts/success', SuccessView.as_view(), name='success'),
+    path('search', SearchResultsView.as_view(), name='search_results'),
 ]

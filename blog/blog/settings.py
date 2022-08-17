@@ -16,7 +16,6 @@ from pathlib import Path
 
 env = environ.Env(
     DEBUG=(bool, False),
-    # CKEDITOR_CONFIGS=(dict, {}),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
