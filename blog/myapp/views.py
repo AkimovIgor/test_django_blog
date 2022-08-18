@@ -18,7 +18,7 @@ class MainView(View):
         posts = paginator.get_page(request.GET.get('page', 1))
         return render(request, 'myapp/pages/home.html', context={
             'posts': posts,
-            'pages': range(1, 4)
+            'pages': range(1, 4),
         })
 
 
@@ -27,7 +27,7 @@ class PostDetailView(View):
     @staticmethod
     def get(request, slug, *args, **kwargs):
         post = get_object_or_404(Post, url=slug)
-        last_posts = Post.objects.all().order_by('id')[:5]
+        last_posts = Post.objects.all().order_by('-id')[:5]
         tags = post.tag.split(', ')
         return render(request, 'myapp/pages/post_detail.html', context={
             'post': post,
@@ -142,4 +142,17 @@ class SearchResultsView(View):
             'count': len(results),
             'pages': range(1, 4),
             'add_params': '&q=' + str(request.GET.get('q'))
+        })
+
+
+class TagView(View):
+
+    @staticmethod
+    def get(request, slug, *args, **kwargs):
+        posts = Post.objects.filter(tag__iregex=rf'(?<![\w\d]){slug}(?![\w\d])')
+        common_tags = Post.get_most_common_tags()
+        return render(request, 'myapp/pages/tag.html', context={
+            'posts': posts,
+            'title': 'Tег: ' + slug,
+            'common_tags': common_tags,
         })

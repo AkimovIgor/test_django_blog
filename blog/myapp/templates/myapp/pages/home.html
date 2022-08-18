@@ -19,7 +19,10 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ post.header|truncatechars:15 }}</h4>
                     <p class="card-text">{{ post.description|truncatechars:100|safe }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
+                    {% for tag in post.tags %}
+                        <a href="{% url 'tag' slug=tag %}" class="mr-1 badge badge-info">#{{ tag }}</a>
+                    {% endfor %}
+                    <div class="d-flex mt-3 justify-content-between align-items-center">
                         <div class="btn-group">
                             <a href="{% url 'post_detail' slug=post.url %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                         </div>

@@ -43,7 +43,7 @@
 {% endblock %}
 
 {% block pagination %}
-    {% if count %}
+    {% if count > 3 %}
     {% include 'myapp/components/pagination.html' %}
     {% endif %}
 {% endblock %}

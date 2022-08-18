@@ -19,9 +19,14 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def tags(self):
+        return self.tag.split(', ')
 
-class Person(models.Model):
-
-    name = models.CharField(max_length=50)
-    age = models.IntegerField()
-    gender = models.CharField(max_length=10, blank=True)
+    @classmethod
+    def get_most_common_tags(cls):
+        tags = []
+        for post in cls.objects.all()[:7]:
+            for tag in post.tags():
+                if tag not in tags:
+                    tags.append(tag)
+        return tags

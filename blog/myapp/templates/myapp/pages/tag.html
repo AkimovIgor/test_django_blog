@@ -1,0 +1,41 @@
+{% extends 'myapp/layouts/base.html' %}
+{% load static %}
+{% block title %}Тег{% endblock %}
+
+{% block header %}
+    {% include 'myapp/components/header.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <p class="my-3">Другие теги:
+        {% for ct in common_tags %}
+             <a href="{% url 'tag' slug=ct %}" class="badge badge-success">#{{ct}}</a>
+        {% endfor %}
+    </p>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="{{ post.image.url }}" alt="" class="card-img-top">
+            <div class="card-body">
+              <h4 class="card-title">{{ post.header|truncatechars:15 }}</h4>
+              {{ post.description|safe|truncatechars:100 }}<br>
+              {% for tag in post.tags %}
+                  <a href="{% url 'tag' slug=tag %}" class="mr-1 badge badge-info">#{{ tag }}</a>
+              {% endfor %}
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{% url 'post_detail' slug=post.url %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                </div>
+                <small class="text-muted">{{ post.created_at }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+</div>
+{% endblock %}
