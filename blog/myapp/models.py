@@ -5,6 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Post(models.Model):
+    """Модель статей"""
 
     header = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
@@ -30,3 +31,26 @@ class Post(models.Model):
                 if tag not in tags:
                     tags.append(tag)
         return tags
+
+
+class Comment(models.Model):
+    """Модель комментариев"""
+
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    username = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user_name'
+    )
+    text = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.text
